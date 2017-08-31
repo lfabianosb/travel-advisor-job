@@ -13,7 +13,6 @@ var target = casper.cli.get(0);
 var ENCARGO = system.env.ENCARGO || 7;
 var TIMEOUT = system.env.SCRAP_TIMEOUT || 45;
 var flight = {};
-var WAIT_PAGE_LOADING = 15000;
 
 casper.on('error', function(msg, backtrace) {
     flight.msg = 'Error message: ' + msg + '\nBacktrace: ' + backtrace;
