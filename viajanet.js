@@ -27,7 +27,7 @@ casper.on('error', function(msg, backtrace) {
 });
 
 casper.start(target, function() {
-    this.wait(10000);
+    this.wait(15000);
 
     //Waiting page load
     this.waitWhileVisible('#vn-content-view > div.fluxo-content > div > span',
