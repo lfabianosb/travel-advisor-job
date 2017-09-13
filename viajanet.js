@@ -5,12 +5,16 @@ var casper = require("casper").create({
         userAgent:   'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0'
     },
     logLevel: "info",
-    verbose: false
+    verbose: false,
+    viewportSize: {
+        width: 720,
+        height: 720
+    }
 });
 var system = require('system');
 
 var target = casper.cli.get(0);
-var ENCARGO = system.env.ENCARGO || 7;
+var ENCARGO = system.env.ENCARGO || 0;
 var TIMEOUT = system.env.SCRAP_TIMEOUT || 45;
 var flight = {};
 
@@ -42,7 +46,7 @@ casper.start(target, function() {
                             flight.msg = 'Valor das passagens não encontrado.';
                             console.log(JSON.stringify(flight, null, null));
                         } else {
-                            fltTotalPassagens = totalPassagens.trim().substring(3).replace('.','').replace(',','.')
+                            fltTotalPassagens = totalPassagens.trim().substring(3).replace('.','').replace(',','.');
 
                             // Taxas e encargos
                             taxasEncargos = this.evaluate(function() {
@@ -56,7 +60,7 @@ casper.start(target, function() {
 
                                 // Companhia aérea
                                 cia = this.evaluate(function() {
-                                    return document.querySelector('#vn-content-view > div.fluxo-content > flight-detail > ul > li:nth-child(1) > div.flights > ul.ng-scope.ida > li.flight.ng-scope.flight-ida > label > div.list-cias > div > span').textContent;
+                                    return document.querySelector('ul.resultados span.cia').textContent;
                                 });
                                 if (cia == null) {
                                     flight.msg = 'Companhia aérea não encontrada.';
